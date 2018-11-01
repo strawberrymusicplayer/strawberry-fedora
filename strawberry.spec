@@ -1,5 +1,5 @@
 Name:           strawberry
-Version:        0.3.3
+Version:        0.4.1
 Release:        1%{?dist}
 Summary:        An audio player and music collection organizer
 
@@ -13,15 +13,8 @@ Summary:        An audio player and music collection organizer
 License:        GPLv2 and GPLv3+ amd LGPLv2 and ASL 2.0 and MIT and Boost and CC-BY-SA
 URL:            http://www.strawbs.org/
 Source0:        https://github.com/jonaski/strawberry/archive/%{version}/%{name}-%{version}.tar.gz
-# upstreamed
-Source1:        strawberry.appdata.xml
 
 Patch4:         strawberry-udisks-headers.patch
-# Use qt5 libraries (upstreamed)
-Patch11:        strawberry-qt5-libraries.patch
-# https://github.com/jonaski/strawberry/commit/6d888eb51aeeef2716b393110aaa6728b52b7b6a
-Patch12:        https://github.com/jonaski/strawberry/commit/6d888eb51aeeef2716b393110aaa6728b52b7b6a.patch#/0001-Analyzer-code-cleanup-and-try-to-fix-crash-on-Fedora.patch
-
 
 BuildRequires:  boost-devel
 BuildRequires:  cmake
@@ -136,7 +129,6 @@ popd
 
 %install
 make install DESTDIR=%{buildroot} -C %{_target_platform}
-install -Dpm 0644 %{S:1} %{buildroot}%{_metainfodir}/strawberry.appdata.xml
 
 
 %check
@@ -156,7 +148,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/strawberry.app
 %{_mandir}/man1/strawberry-tagreader.1.*
 
 
-
 %changelog
+* Thu Nov 01 2018 Robert-André Mauchin <zebob.m@gmail.com> - 0.4.1-1
+- Release 0.4.1
+
 * Sat Oct 20 2018 Robert-André Mauchin <zebob.m@gmail.com> - 0.3.3-1
 - Initial package
