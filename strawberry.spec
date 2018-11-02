@@ -1,6 +1,6 @@
 Name:           strawberry
 Version:        0.4.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        An audio player and music collection organizer
 
 # Main program: GPLv3
@@ -67,7 +67,6 @@ BuildRequires:  pkgconfig(libgpod-1.0)
 Requires:       gstreamer1-plugins-good
 Requires:       hicolor-icon-theme
 Requires:       qca-qt5-ossl%{?_isa}
-Requires:       qtiocompressor >= 2.3.1-17
 
 Provides:       bundled(qocoa)
 Provides:       bundled(taglib) = 1.12-1
@@ -149,6 +148,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/strawberry.app
 
 
 %changelog
+* Fri Nov 02 2018 Robert-André Mauchin <zebob.m@gmail.com> - 0.4.1-2
+- Remove extraneous Requires to qtiocompressor
+
 * Thu Nov 01 2018 Robert-André Mauchin <zebob.m@gmail.com> - 0.4.1-1
 - Release 0.4.1
 
