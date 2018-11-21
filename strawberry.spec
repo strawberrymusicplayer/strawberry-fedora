@@ -1,6 +1,6 @@
 Name:           strawberry
 Version:        0.4.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        An audio player and music collection organizer
 
 # Main program: GPLv3
@@ -148,6 +148,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/strawberry.app
 
 
 %changelog
+* Wed Nov 21 2018 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 0.4.1-3
+- Rebuild for protobuf 3.6
+
 * Fri Nov 02 2018 Robert-André Mauchin <zebob.m@gmail.com> - 0.4.1-2
 - Remove extraneous Requires to qtiocompressor
 
