@@ -1,6 +1,6 @@
 Name:           strawberry
-Version:        0.4.1
-Release:        3%{?dist}
+Version:        0.4.2
+Release:        1%{?dist}
 Summary:        An audio player and music collection organizer
 
 # Main program: GPLv3
@@ -15,6 +15,10 @@ URL:            http://www.strawbs.org/
 Source0:        https://github.com/jonaski/strawberry/archive/%{version}/%{name}-%{version}.tar.gz
 
 Patch4:         strawberry-udisks-headers.patch
+# Remove default shortcuts because of it steals focus when using GNOME
+# https://github.com/clementine-player/Clementine/issues/6191
+# https://bugzilla.redhat.com/show_bug.cgi?id=1643937
+Patch13:        0001-Remove-default-shortcuts.patch
 
 BuildRequires:  boost-devel
 BuildRequires:  cmake
@@ -148,6 +152,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/strawberry.app
 
 
 %changelog
+* Fri Nov 30 2018 Robert-André Mauchin <zebob.m@gmail.com> - 0.4.2-1
+- Release 0.4.2
+
 * Wed Nov 21 2018 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 0.4.1-3
 - Rebuild for protobuf 3.6
 
