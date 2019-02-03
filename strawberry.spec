@@ -1,6 +1,6 @@
 Name:           strawberry
 Version:        0.4.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        An audio player and music collection organizer
 
 # Main program: GPLv3
@@ -152,6 +152,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/strawberry.app
 
 
 %changelog
+* Sun Feb 03 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.4.2-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
 * Fri Nov 30 2018 Robert-André Mauchin <zebob.m@gmail.com> - 0.4.2-1
 - Release 0.4.2
 
