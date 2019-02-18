@@ -1,12 +1,13 @@
 Name:           strawberry
-Version:        0.4.2
-Release:        2%{?dist}
+Version:        0.5.2
+Release:        1%{?dist}
 Summary:        An audio player and music collection organizer
 
 # Main program: GPLv3
 # src/analyzer and src/engine/gstengine and src/engine/xineengine: GPLv2
 # 3rdparty/taglib, src/widgets/fancytabwidget and src/widgets/stylehelper: LGPLv2
 # 3rdparty/qocoa: MIT
+# 3rdparty/singleapplication: MIT
 # 3rdparty/utf8-cpp: Boost
 # src/core/timeconstants.h and ext/libstrawberry-common/core/logging and ext/libstrawberry-common/core/messagehandler: ASL 2.0
 # some icons in qocoa: CC-BY-SA
@@ -15,10 +16,6 @@ URL:            http://www.strawbs.org/
 Source0:        https://github.com/jonaski/strawberry/archive/%{version}/%{name}-%{version}.tar.gz
 
 Patch4:         strawberry-udisks-headers.patch
-# Remove default shortcuts because of it steals focus when using GNOME
-# https://github.com/clementine-player/Clementine/issues/6191
-# https://bugzilla.redhat.com/show_bug.cgi?id=1643937
-Patch13:        0001-Remove-default-shortcuts.patch
 
 BuildRequires:  boost-devel
 BuildRequires:  cmake
@@ -26,7 +23,6 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  gcc-c++
 BuildRequires:  gettext
 BuildRequires:  libappstream-glib
-BuildRequires:  liblastfm-qt5-devel
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(dbus-1)
 BuildRequires:  pkgconfig(gio-2.0)
@@ -56,13 +52,11 @@ BuildRequires:  pkgconfig(Qt5OpenGL)
 BuildRequires:  pkgconfig(Qt5Sql)
 BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(Qt5X11Extras)
-BuildRequires:  pkgconfig(Qt5Xml)
 BuildRequires:  pkgconfig(QxtCore-qt5)
+BuildRequires:  pkgconfig(phonon4qt5)
 BuildRequires:  pkgconfig(sqlite3) >= 3.7
 BuildRequires:  pkgconfig(taglib) >= 1.11
 BuildRequires:  qt5-linguist
-BuildRequires:  qtsingleapplication-qt5-devel >= 2.6.1-2
-BuildRequires:  qtsinglecoreapplication-qt5-devel
 BuildRequires:  sha2-devel
 %ifnarch s390 s390x
 BuildRequires:  pkgconfig(libgpod-1.0)
@@ -107,9 +101,9 @@ Features:
 # Remove most 3rdparty libraries
 # Unbundle taglib next release:
 # https://github.com/taglib/taglib/issues/837#issuecomment-428389347
-mv 3rdparty/{qocoa,taglib,utf8-cpp}/ .
+mv 3rdparty/{qocoa,singleapplication,taglib,utf8-cpp}/ .
 rm -fr 3rdparty/*
-mv {qocoa,taglib,utf8-cpp}/ 3rdparty/
+mv {qocoa,singleapplication,taglib,utf8-cpp}/ 3rdparty/
 
 mv 3rdparty/qocoa/LICENSE.txt 3rdparty/qocoa/LICENCE-qcocoa.txt
 mv 3rdparty/taglib/COPYING 3rdparty/taglib/COPYING-taglib
@@ -122,7 +116,6 @@ pushd %{_target_platform}
 %{cmake} \
   -DBUILD_WERROR:BOOL=OFF \
   -DCMAKE_BUILD_TYPE:STRING=Release \
-  -DUSE_SYSTEM_QTSINGLEAPPLICATION=1 \
   -DUSE_SYSTEM_QXT=1 \
   ..
 popd
@@ -131,7 +124,7 @@ popd
 
 
 %install
-make install DESTDIR=%{buildroot} -C %{_target_platform}
+%make_install -C %{_target_platform}
 
 
 %check
@@ -152,6 +145,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/strawberry.app
 
 
 %changelog
+* Mon Feb 18 2019 Robert-André Mauchin <zebob.m@gmail.com> - 0.5.2-1
+- Update to 0.5.2
+
 * Sun Feb 03 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.4.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
