@@ -1,6 +1,6 @@
 Name:           strawberry
 Version:        0.5.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        An audio player and music collection organizer
 
 # Main program: GPLv3
@@ -42,30 +42,26 @@ BuildRequires:  pkgconfig(libnotify)
 BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  pkgconfig(libudf)
 BuildRequires:  pkgconfig(protobuf)
-BuildRequires:  pkgconfig(qca2-qt5)
 BuildRequires:  pkgconfig(Qt5Concurrent)
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(Qt5Gui)
 BuildRequires:  pkgconfig(Qt5Network)
-BuildRequires:  pkgconfig(Qt5OpenGL)
 BuildRequires:  pkgconfig(Qt5Sql)
 BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(Qt5X11Extras)
-BuildRequires:  pkgconfig(QxtCore-qt5)
 BuildRequires:  pkgconfig(phonon4qt5)
 BuildRequires:  pkgconfig(sqlite3) >= 3.7
 BuildRequires:  pkgconfig(taglib) >= 1.11
-BuildRequires:  qt5-linguist
-BuildRequires:  sha2-devel
 %ifnarch s390 s390x
 BuildRequires:  pkgconfig(libgpod-1.0)
 %endif
 
 Requires:       gstreamer1-plugins-good
 Requires:       hicolor-icon-theme
-Requires:       qca-qt5-ossl%{?_isa}
 
+Provides:       bundled(singleapplication)
+Provides:       bundled(singlecoreapplication)
 Provides:       bundled(qocoa)
 Provides:       bundled(taglib) = 1.12-1
 Provides:       bundled(utf8-cpp)
@@ -93,6 +89,7 @@ Features:
   * Equalizer
   * Transfer music to iPod, iPhone, MTP or mass-storage USB player
   * Integrated Tidal support
+  * Scrobbler with support for Last.fm, Libre.fm and ListenBrainz
 
 
 %prep
@@ -105,6 +102,7 @@ mv 3rdparty/{qocoa,singleapplication,taglib,utf8-cpp}/ .
 rm -fr 3rdparty/*
 mv {qocoa,singleapplication,taglib,utf8-cpp}/ 3rdparty/
 
+mv 3rdparty/singleapplication/LICENSE 3rdparty/singleapplication/LICENSE-singleapplication
 mv 3rdparty/qocoa/LICENSE.txt 3rdparty/qocoa/LICENCE-qcocoa.txt
 mv 3rdparty/taglib/COPYING 3rdparty/taglib/COPYING-taglib
 
@@ -116,7 +114,6 @@ pushd %{_target_platform}
 %{cmake} \
   -DBUILD_WERROR:BOOL=OFF \
   -DCMAKE_BUILD_TYPE:STRING=Release \
-  -DUSE_SYSTEM_QXT=1 \
   ..
 popd
 
@@ -133,7 +130,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/strawberry.app
 
 
 %files
-%license COPYING 3rdparty/qocoa/LICENCE-qcocoa.txt 3rdparty/taglib/COPYING-taglib
+%license COPYING 3rdparty/qocoa/LICENCE-qcocoa.txt 3rdparty/taglib/COPYING-taglib 3rdparty/singleapplication/LICENSE-singleapplication
 %doc Changelog
 %{_bindir}/strawberry
 %{_bindir}/strawberry-tagreader
@@ -145,6 +142,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/strawberry.app
 
 
 %changelog
+* Thu Feb 21 2019 Robert-André Mauchin <zebob.m@gmail.com> - 0.5.2-2
+- Remove unneeded BR
+
 * Mon Feb 18 2019 Robert-André Mauchin <zebob.m@gmail.com> - 0.5.2-1
 - Update to 0.5.2
 
