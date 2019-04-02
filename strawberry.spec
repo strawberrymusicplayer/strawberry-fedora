@@ -1,6 +1,6 @@
 Name:           strawberry
-Version:        0.5.2
-Release:        2%{?dist}
+Version:        0.5.3
+Release:        1%{?dist}
 Summary:        An audio player and music collection organizer
 
 # Main program: GPLv3
@@ -73,12 +73,12 @@ It is a fork of Clementine. The name is inspired by the band Strawbs.
 
 Features:
   * Play and organize music
-  * Supports WAV, FLAC, WavPack, DSF, DSDIFF, Ogg Vorbis, Speex, MPC, 
+  * Supports WAV, FLAC, WavPack, DSF, DSDIFF, Ogg Vorbis, Speex, MPC,
     TrueAudio, AIFF, MP4, MP3 and ASF
   * Audio CD playback
   * Native desktop notifications
   * Playlists in multiple formats
-  * Advanced output and device options with support for bit perfect playback 
+  * Advanced output and device options with support for bit perfect playback
     on Linux
   * Edit tags on music files
   * Fetch tags from MusicBrainz
@@ -125,8 +125,8 @@ popd
 
 
 %check
-desktop-file-validate %{buildroot}%{_datadir}/applications/strawberry.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/strawberry.appdata.xml
+desktop-file-validate %{buildroot}%{_datadir}/applications/org.strawbs.strawberry.desktop
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawbs.strawberry.appdata.xml
 
 
 %files
@@ -134,14 +134,17 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/strawberry.app
 %doc Changelog
 %{_bindir}/strawberry
 %{_bindir}/strawberry-tagreader
-%{_metainfodir}/strawberry.appdata.xml
-%{_datadir}/applications/strawberry.desktop
+%{_metainfodir}/org.strawbs.strawberry.appdata.xml
+%{_datadir}/applications/org.strawbs.strawberry.desktop
 %{_datadir}/icons/hicolor/*/apps/strawberry.*
 %{_mandir}/man1/strawberry.1.*
 %{_mandir}/man1/strawberry-tagreader.1.*
 
 
 %changelog
+* Tue Apr 02 01:34:00 CET 2019 Robert-André Mauchin <zebob.m@gmail.com> - 0.5.3-1
+- Release 0.5.3
+
 * Thu Feb 21 2019 Robert-André Mauchin <zebob.m@gmail.com> - 0.5.2-2
 - Remove unneeded BR
 
