@@ -1,6 +1,6 @@
 Name:           strawberry
 Version:        0.5.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        An audio player and music collection organizer
 
 # Main program: GPLv3
@@ -142,6 +142,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawbs.st
 
 
 %changelog
+* Fri May 03 23:14:14 CEST 2019 Robert-André Mauchin <zebob.m@gmail.com> - 0.5.3-2
+- Rebuilt for new gstreamer
+
 * Tue Apr 02 01:34:00 CET 2019 Robert-André Mauchin <zebob.m@gmail.com> - 0.5.3-1
 - Release 0.5.3
 
