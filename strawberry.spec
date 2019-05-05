@@ -1,5 +1,5 @@
 Name:           strawberry
-Version:        0.5.4
+Version:        0.5.5
 Release:        1%{?dist}
 Summary:        Audio player and music collection organizer
 
@@ -144,6 +144,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawbs.st
 
 
 %changelog
+* Sun May 05 21:55:17 CEST 2019 Robert-André Mauchin <zebob.m@gmail.com> - 0.5.5-1
+- Release 0.5.5
+
 * Sun May 05 20:10:21 CEST 2019 Robert-André Mauchin <zebob.m@gmail.com> - 0.5.4-1
 - Release 0.5.4
 
