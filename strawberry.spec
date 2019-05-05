@@ -29,6 +29,7 @@ BuildRequires:  pkgconfig(gio-2.0)
 BuildRequires:  pkgconfig(gio-unix-2.0)
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(glu)
+BuildRequires:  pkgconfig(gnutls)
 BuildRequires:  pkgconfig(gstreamer-1.0)
 BuildRequires:  pkgconfig(gstreamer-app-1.0)
 BuildRequires:  pkgconfig(gstreamer-audio-1.0)
@@ -56,6 +57,7 @@ BuildRequires:  pkgconfig(taglib) >= 1.11
 %ifnarch s390 s390x
 BuildRequires:  pkgconfig(libgpod-1.0)
 %endif
+BuildRequires:  qt5-linguist
 
 Requires:       gstreamer1-plugins-good
 Requires:       hicolor-icon-theme
