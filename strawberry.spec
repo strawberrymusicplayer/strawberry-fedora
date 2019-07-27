@@ -1,6 +1,6 @@
 Name:           strawberry
 Version:        0.5.5
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Audio player and music collection organizer
 
 # Main program: GPLv3
@@ -144,6 +144,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawbs.st
 
 
 %changelog
+* Sat Jul 27 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.5.5-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
 * Sun May 05 21:55:17 CEST 2019 Robert-André Mauchin <zebob.m@gmail.com> - 0.5.5-1
 - Release 0.5.5
 
