@@ -6,12 +6,10 @@ Summary:        Audio player and music collection organizer
 # Main program: GPLv3
 # src/analyzer and src/engine/gstengine and src/engine/xineengine: GPLv2
 # 3rdparty/taglib, src/widgets/fancytabwidget and src/widgets/stylehelper: LGPLv2
-# 3rdparty/qocoa: MIT
 # 3rdparty/singleapplication: MIT
 # 3rdparty/utf8-cpp: Boost
 # src/core/timeconstants.h and ext/libstrawberry-common/core/logging and ext/libstrawberry-common/core/messagehandler: ASL 2.0
-# some icons in qocoa: CC-BY-SA
-License:        GPLv2 and GPLv3+ amd LGPLv2 and ASL 2.0 and MIT and Boost and CC-BY-SA
+License:        GPLv2 and GPLv3+ amd LGPLv2 and ASL 2.0 and MIT and Boost
 URL:            http://www.strawbs.org/
 Source0:        https://github.com/jonaski/strawberry/archive/%{version}/%{name}-%{version}.tar.gz
 
@@ -63,8 +61,6 @@ Requires:       gstreamer1-plugins-good
 Requires:       hicolor-icon-theme
 
 Provides:       bundled(singleapplication)
-Provides:       bundled(singlecoreapplication)
-Provides:       bundled(qocoa)
 Provides:       bundled(taglib) = 1.12-1
 Provides:       bundled(utf8-cpp)
 
@@ -100,12 +96,11 @@ Features:
 # Remove most 3rdparty libraries
 # Unbundle taglib next release:
 # https://github.com/taglib/taglib/issues/837#issuecomment-428389347
-mv 3rdparty/{qocoa,singleapplication,taglib,utf8-cpp}/ .
+mv 3rdparty/{singleapplication,taglib,utf8-cpp}/ .
 rm -fr 3rdparty/*
-mv {qocoa,singleapplication,taglib,utf8-cpp}/ 3rdparty/
+mv {singleapplication,taglib,utf8-cpp}/ 3rdparty/
 
 mv 3rdparty/singleapplication/LICENSE 3rdparty/singleapplication/LICENSE-singleapplication
-mv 3rdparty/qocoa/LICENSE.txt 3rdparty/qocoa/LICENCE-qcocoa.txt
 mv 3rdparty/taglib/COPYING 3rdparty/taglib/COPYING-taglib
 
 
@@ -132,7 +127,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawbs.st
 
 
 %files
-%license COPYING 3rdparty/qocoa/LICENCE-qcocoa.txt 3rdparty/taglib/COPYING-taglib 3rdparty/singleapplication/LICENSE-singleapplication
+%license COPYING 3rdparty/taglib/COPYING-taglib 3rdparty/singleapplication/LICENSE-singleapplication
 %doc Changelog
 %{_bindir}/strawberry
 %{_bindir}/strawberry-tagreader
