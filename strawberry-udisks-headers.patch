@@ -1,12 +1,13 @@
-diff -up Clementine-fb00835468295925a6945a286406a2eec6bdb67a/src/CMakeLists.txt.udisks Clementine-fb00835468295925a6945a286406a2eec6bdb67a/src/CMakeLists.txt
---- Clementine-fb00835468295925a6945a286406a2eec6bdb67a/src/CMakeLists.txt.udisks	2018-10-05 11:56:49.000000000 +0200
-+++ Clementine-fb00835468295925a6945a286406a2eec6bdb67a/src/CMakeLists.txt	2018-10-21 00:36:08.950165997 +0200
-@@ -946,6 +946,8 @@ if(HAVE_DBUS)
+diff -up strawberry-0.6.3/src/CMakeLists.txt.udisks strawberry-0.6.3/src/CMakeLists.txt
+--- strawberry-0.6.3/src/CMakeLists.txt.udisks	2019-08-08 23:14:43.948483881 +0200
++++ strawberry-0.6.3/src/CMakeLists.txt	2019-08-08 23:18:59.966764619 +0200
+@@ -662,6 +662,9 @@ if(UNIX AND HAVE_DBUS)
    list(APPEND HEADERS ${CMAKE_CURRENT_BINARY_DIR}/dbus/avahientrygroup.h)
    list(APPEND SOURCES ${CMAKE_CURRENT_BINARY_DIR}/dbus/avahientrygroup.cpp)
  
-+  set_source_files_properties( dbus/org.freedesktop.UDisks.xml dbus/org.freedesktop.UDisks.Device.xml PROPERTIES NO_NAMESPACE TRUE)
-+
-   # DeviceKit DBUS interfaces
-   if(HAVE_DEVICEKIT)
-     set_source_files_properties(dbus/org.freedesktop.UDisks.xml
++  set_source_files_properties(dbus/org.freedesktop.UDisks.xml
++     dbus/org.freedesktop.UDisks.Device.xml PROPERTIES NO_NAMESPACE TRUE)
++  
+   if(HAVE_UDISKS2)
+        set_source_files_properties(dbus/org.freedesktop.DBus.ObjectManager.xml
+            PROPERTIES NO_NAMESPACE dbus/objectmanager INCLUDE dbus/metatypes.h)
