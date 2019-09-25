@@ -1,5 +1,5 @@
 Name:           strawberry
-Version:        0.6.3
+Version:        0.6.4
 Release:        1%{?dist}
 Summary:        Audio player and music collection organizer
 
@@ -64,7 +64,6 @@ Provides:       bundled(singleapplication)
 Provides:       bundled(taglib) = 1.12-1
 Provides:       bundled(utf8-cpp)
 
-
 %description
 Strawberry is a audio player and music collection organizer.
 It is a fork of Clementine. The name is inspired by the band Strawbs.
@@ -89,7 +88,6 @@ Features:
   * Integrated Tidal support
   * Scrobbler with support for Last.fm, Libre.fm and ListenBrainz
 
-
 %prep
 %autosetup -p1
 
@@ -103,8 +101,6 @@ mv {singleapplication,taglib,utf8-cpp}/ 3rdparty/
 mv 3rdparty/singleapplication/LICENSE 3rdparty/singleapplication/LICENSE-singleapplication
 mv 3rdparty/taglib/COPYING 3rdparty/taglib/COPYING-taglib
 
-
-
 %build
 mkdir %{_target_platform}
 pushd %{_target_platform}
@@ -113,32 +109,30 @@ pushd %{_target_platform}
   -DCMAKE_BUILD_TYPE:STRING=Release \
   ..
 popd
-
 %make_build -C %{_target_platform}
-
 
 %install
 %make_install -C %{_target_platform}
 
-
 %check
-desktop-file-validate %{buildroot}%{_datadir}/applications/org.strawbs.strawberry.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawbs.strawberry.appdata.xml
-
+desktop-file-validate %{buildroot}%{_datadir}/applications/org.strawberrymusicplayer.strawberry.desktop
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawberrymusicplayer.strawberry.appdata.xml
 
 %files
 %license COPYING 3rdparty/taglib/COPYING-taglib 3rdparty/singleapplication/LICENSE-singleapplication
 %doc Changelog
 %{_bindir}/strawberry
 %{_bindir}/strawberry-tagreader
-%{_metainfodir}/org.strawbs.strawberry.appdata.xml
-%{_datadir}/applications/org.strawbs.strawberry.desktop
+%{_metainfodir}/org.strawberrymusicplayer.strawberry.appdata.xml
+%{_datadir}/applications/org.strawberrymusicplayer.strawberry.desktop
 %{_datadir}/icons/hicolor/*/apps/strawberry.*
 %{_mandir}/man1/strawberry.1.*
 %{_mandir}/man1/strawberry-tagreader.1.*
 
-
 %changelog
+* Wed Sep 25 19:58:52 CEST 2019 Robert-André Mauchin <zebob.m@gmail.com> - 0.6.4-1
+- Release 0.6.4
+
 * Thu Aug 08 23:06:50 CEST 2019 Robert-André Mauchin <zebob.m@gmail.com> - 0.6.3-1
 - Release 0.6.3
 
