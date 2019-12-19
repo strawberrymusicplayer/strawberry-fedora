@@ -1,6 +1,6 @@
 Name:           strawberry
 Version:        0.6.7
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Audio player and music collection organizer
 
 # Main program: GPLv3
@@ -130,6 +130,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawberry
 %{_mandir}/man1/strawberry-tagreader.1.*
 
 %changelog
+* Thu Dec 19 2019 Orion Poplawski <orion@nwra.com> - 0.6.7-2
+- Rebuild for protobuf 3.11
+
 * Wed Dec 04 16:39:27 CET 2019 Robert-André Mauchin <zebob.m@gmail.com> - 0.6.7-1
 - Release 0.6.7
 
