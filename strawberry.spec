@@ -1,6 +1,6 @@
 Name:           strawberry
 Version:        0.6.8
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Audio player and music collection organizer
 
 # Main program: GPLv3
@@ -130,6 +130,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawberry
 %{_mandir}/man1/strawberry-tagreader.1.*
 
 %changelog
+* Tue Mar 31 2020 Adrian Reber <adrian@lisas.de> - 0.6.8-3
+- Rebuilt for libcdio-2.1.0
+
 * Fri Jan 31 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.6.8-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
