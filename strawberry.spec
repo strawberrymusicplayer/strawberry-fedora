@@ -1,6 +1,6 @@
 Name:           strawberry
-Version:        0.6.8
-Release:        3%{?dist}
+Version:        0.6.12
+Release:        1%{?dist}
 Summary:        Audio player and music collection organizer
 
 # Main program: GPLv3
@@ -11,7 +11,7 @@ Summary:        Audio player and music collection organizer
 # src/core/timeconstants.h and ext/libstrawberry-common/core/logging and ext/libstrawberry-common/core/messagehandler: ASL 2.0
 License:        GPLv2 and GPLv3+ amd LGPLv2 and ASL 2.0 and MIT and Boost
 URL:            http://www.strawbs.org/
-Source0:        https://github.com/jonaski/strawberry/archive/%{version}/%{name}-%{version}.tar.gz
+Source0:        https://github.com/strawberrymusicplayer/strawberry/archive/%{version}/%{name}-%{version}.tar.gz
 
 Patch4:         strawberry-udisks-headers.patch
 
@@ -130,6 +130,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawberry
 %{_mandir}/man1/strawberry-tagreader.1.*
 
 %changelog
+* Tue Jun 16 22:48:55 CEST 2020 Robert-André Mauchin <zebob.m@gmail.com> - 0.6.12-1
+- Update to 0.6.12
+
 * Tue Mar 31 2020 Adrian Reber <adrian@lisas.de> - 0.6.8-3
 - Rebuilt for libcdio-2.1.0
 
