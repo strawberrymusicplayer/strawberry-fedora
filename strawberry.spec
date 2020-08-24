@@ -1,6 +1,9 @@
+# Force out of source build
+%undefine __cmake_in_source_build
+
 Name:           strawberry
-Version:        0.6.13
-Release:        3%{?dist}
+Version:        0.7.2
+Release:        1%{?dist}
 Summary:        Audio player and music collection organizer
 
 # Main program: GPLv3
@@ -102,14 +105,12 @@ mv 3rdparty/singleapplication/LICENSE 3rdparty/singleapplication/LICENSE-singlea
 mv 3rdparty/taglib/COPYING 3rdparty/taglib/COPYING-taglib
 
 %build
-%{cmake} -B %{_vpath_builddir} \
-  -DBUILD_WERROR:BOOL=OFF \
-  -DCMAKE_BUILD_TYPE:STRING=Release \
-  ..
-%make_build -C %{_vpath_builddir}
+%{cmake} -DBUILD_WERROR:BOOL=OFF \
+         -DCMAKE_BUILD_TYPE:STRING=Release
+%cmake_build
 
 %install
-%make_install -C %{_vpath_builddir}
+%cmake_install
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/org.strawberrymusicplayer.strawberry.desktop
@@ -127,6 +128,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawberry
 %{_mandir}/man1/strawberry-tagreader.1.*
 
 %changelog
+* Mon Aug 24 20:19:01 CEST 2020 Robert-André Mauchin <zebob.m@gmail.com> - 0.7.2-1
+- Update to 0.7.2 (#1869008)
+
 * Sat Aug 01 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.6.13-3
 - Second attempt - Rebuilt for
   https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
