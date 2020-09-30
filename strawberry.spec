@@ -5,7 +5,7 @@
 
 Name:           strawberry
 Version:        0.7.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Audio player and music collection organizer
 
 # Main program: GPLv3
@@ -130,7 +130,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawberry
 %{_mandir}/man1/strawberry-tagreader.1.*
 
 %changelog
-* Wed Sep 30 15:15:27 CEST 2020 Robert-André Mauchin <zebob.m@gmail.com> - 0.7.2-2
+* Wed Sep 30 15:15:27 CEST 2020 Robert-André Mauchin <zebob.m@gmail.com> - 0.7.2-3
 - Disable LTO
 - Fix #1878315
 
