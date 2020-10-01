@@ -1,11 +1,9 @@
 # Force out of source build
 %undefine __cmake_in_source_build
-# Disable LTO
-%define _lto_cflags %{nil}
 
 Name:           strawberry
 Version:        0.7.2
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Audio player and music collection organizer
 
 # Main program: GPLv3
@@ -107,6 +105,9 @@ mv 3rdparty/singleapplication/LICENSE 3rdparty/singleapplication/LICENSE-singlea
 mv 3rdparty/taglib/COPYING 3rdparty/taglib/COPYING-taglib
 
 %build
+# QT applications need to avoid local binding and copy relocations.  Forcing them to build with
+# -fPIC solves that problem
+export CXXFLAGS="-fPIC $RPM_OPT_FLAGS"
 %{cmake} -DBUILD_WERROR:BOOL=OFF \
          -DCMAKE_BUILD_TYPE:STRING=Release
 %cmake_build
@@ -130,6 +131,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawberry
 %{_mandir}/man1/strawberry-tagreader.1.*
 
 %changelog
+* Thu Oct 01 2020 Jeff Law <law@redhat.com> - 0.7.2-4
+- Force -fPIC into build flags.  Re-enable LTO
+
 * Wed Sep 30 15:15:27 CEST 2020 Robert-André Mauchin <zebob.m@gmail.com> - 0.7.2-3
 - Disable LTO
 - Fix #1878315
