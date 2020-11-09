@@ -2,8 +2,8 @@
 %undefine __cmake_in_source_build
 
 Name:           strawberry
-Version:        0.7.2
-Release:        4%{?dist}
+Version:        0.8.3
+Release:        1%{?dist}
 Summary:        Audio player and music collection organizer
 
 # Main program: GPLv3
@@ -131,6 +131,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawberry
 %{_mandir}/man1/strawberry-tagreader.1.*
 
 %changelog
+* Mon Nov 09 08:13:59 CET 2020 Robert-André Mauchin <zebob.m@gmail.com> - 0.8.3-1
+- Update to 0.8.3 (#1891280, #1887027)
+
 * Thu Oct 01 2020 Jeff Law <law@redhat.com> - 0.7.2-4
 - Force -fPIC into build flags.  Re-enable LTO
 
