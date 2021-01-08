@@ -2,7 +2,7 @@
 %undefine __cmake_in_source_build
 
 Name:           strawberry
-Version:        0.8.4
+Version:        0.8.5
 Release:        1%{?dist}
 Summary:        Audio player and music collection organizer
 
@@ -131,6 +131,10 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawberry
 %{_mandir}/man1/strawberry-tagreader.1.*
 
 %changelog
+* Fri Jan  8 17:58:40 CET 2021 Robert-André Mauchin <zebob.m@gmail.com> - 0.8.5-1
+- Update to 0.8.5
+- Close: rhbz#1909456
+
 * Sat Dec 05 14:57:04 CET 2020 Robert-André Mauchin <zebob.m@gmail.com> - 0.8.4-1
 - Update to 0.8.4
 - Close: rhbz#1897885
