@@ -1,9 +1,6 @@
-# Force out of source build
-%undefine __cmake_in_source_build
-
 Name:           strawberry
-Version:        0.8.5
-Release:        3%{?dist}
+Version:        0.9.2
+Release:        1%{?dist}
 Summary:        Audio player and music collection organizer
 
 # Main program: GPLv3
@@ -93,16 +90,7 @@ Features:
 
 %prep
 %autosetup -p1
-
-# Remove most 3rdparty libraries
-# Unbundle taglib next release:
-# https://github.com/taglib/taglib/issues/837#issuecomment-428389347
-mv 3rdparty/{singleapplication,taglib,utf8-cpp}/ .
-rm -fr 3rdparty/*
-mv {singleapplication,taglib,utf8-cpp}/ 3rdparty/
-
-mv 3rdparty/singleapplication/LICENSE 3rdparty/singleapplication/LICENSE-singleapplication
-mv 3rdparty/taglib/COPYING 3rdparty/taglib/COPYING-taglib
+mv 3rdparty/singleapplication/LICENSE LICENSE-singleapplication
 
 %build
 # QT applications need to avoid local binding and copy relocations.  Forcing them to build with
@@ -120,7 +108,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/org.strawberrymusicpl
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawberrymusicplayer.strawberry.appdata.xml
 
 %files
-%license COPYING 3rdparty/taglib/COPYING-taglib 3rdparty/singleapplication/LICENSE-singleapplication
+%license COPYING LICENSE-singleapplication
 %doc Changelog
 %{_bindir}/strawberry
 %{_bindir}/strawberry-tagreader
@@ -131,6 +119,10 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawberry
 %{_mandir}/man1/strawberry-tagreader.1.*
 
 %changelog
+* Thu Apr  8 18:18:11 CEST 2021 Robert-André Mauchin <zebob.m@gmail.com> - 0.9.2-1
+- Update to 0.9.2
+- Close: rhbz#1938490
+
 * Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 0.8.5-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
