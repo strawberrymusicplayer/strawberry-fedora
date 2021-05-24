@@ -1,5 +1,5 @@
 Name:           strawberry
-Version:        0.9.2
+Version:        0.9.3
 Release:        1%{?dist}
 Summary:        Audio player and music collection organizer
 
@@ -119,6 +119,10 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawberry
 %{_mandir}/man1/strawberry-tagreader.1.*
 
 %changelog
+* Mon May 24 16:59:41 CEST 2021 Robert-André Mauchin <zebob.m@gmail.com> - 0.9.3-1
+- Update to 0.9.3
+- Close: rhbz#1950834
+
 * Thu Apr  8 18:18:11 CEST 2021 Robert-André Mauchin <zebob.m@gmail.com> - 0.9.2-1
 - Update to 0.9.2
 - Close: rhbz#1938490
