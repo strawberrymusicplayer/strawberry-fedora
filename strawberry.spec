@@ -1,19 +1,16 @@
 Name:           strawberry
-Version:        0.9.3
+Version:        1.0.0
 Release:        %autorelease
 Summary:        Audio player and music collection organizer
 
 # Main program: GPLv3
 # src/analyzer and src/engine/gstengine and src/engine/xineengine: GPLv2
-# 3rdparty/taglib, src/widgets/fancytabwidget and src/widgets/stylehelper: LGPLv2
+# src/widgets/fancytabwidget and src/widgets/stylehelper: LGPLv2
 # 3rdparty/singleapplication: MIT
-# 3rdparty/utf8-cpp: Boost
 # src/core/timeconstants.h and ext/libstrawberry-common/core/logging and ext/libstrawberry-common/core/messagehandler: ASL 2.0
-License:        GPLv2 and GPLv3+ amd LGPLv2 and ASL 2.0 and MIT and Boost
+License:        GPLv2 and GPLv3+ and LGPLv2 and ASL 2.0 and MIT and Boost
 URL:            https://www.strawberrymusicplayer.org/
 Source0:        https://github.com/strawberrymusicplayer/strawberry/archive/%{version}/%{name}-%{version}.tar.gz
-
-Patch4:         strawberry-udisks-headers.patch
 
 BuildRequires:  boost-devel
 BuildRequires:  cmake
@@ -23,23 +20,22 @@ BuildRequires:  gettext
 BuildRequires:  libappstream-glib
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(dbus-1)
+BuildRequires:  pkgconfig(fftw3)
 BuildRequires:  pkgconfig(gio-2.0)
 BuildRequires:  pkgconfig(gio-unix-2.0)
 BuildRequires:  pkgconfig(glib-2.0)
-BuildRequires:  pkgconfig(glu)
 BuildRequires:  pkgconfig(gnutls)
 BuildRequires:  pkgconfig(gstreamer-1.0)
 BuildRequires:  pkgconfig(gstreamer-app-1.0)
 BuildRequires:  pkgconfig(gstreamer-audio-1.0)
 BuildRequires:  pkgconfig(gstreamer-base-1.0)
+BuildRequires:  pkgconfig(gstreamer-pbutils-1.0)
 BuildRequires:  pkgconfig(gstreamer-tag-1.0)
 BuildRequires:  pkgconfig(gthread-2.0)
 BuildRequires:  pkgconfig(libcdio)
 BuildRequires:  pkgconfig(libchromaprint)
 BuildRequires:  pkgconfig(libmtp)
-BuildRequires:  pkgconfig(libnotify)
 BuildRequires:  pkgconfig(libpulse)
-BuildRequires:  pkgconfig(libudf)
 BuildRequires:  pkgconfig(protobuf)
 BuildRequires:  pkgconfig(Qt5Concurrent)
 BuildRequires:  pkgconfig(Qt5Core)
@@ -49,7 +45,6 @@ BuildRequires:  pkgconfig(Qt5Network)
 BuildRequires:  pkgconfig(Qt5Sql)
 BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(Qt5X11Extras)
-BuildRequires:  pkgconfig(phonon4qt5)
 BuildRequires:  pkgconfig(sqlite3) >= 3.7
 BuildRequires:  pkgconfig(taglib) >= 1.11
 %ifnarch s390 s390x
@@ -61,8 +56,6 @@ Requires:       gstreamer1-plugins-good
 Requires:       hicolor-icon-theme
 
 Provides:       bundled(singleapplication)
-Provides:       bundled(taglib) = 1.12-1
-Provides:       bundled(utf8-cpp)
 
 %description
 Strawberry is a audio player and music collection organizer.
@@ -92,10 +85,11 @@ Features:
 %autosetup -p1
 mv 3rdparty/singleapplication/LICENSE LICENSE-singleapplication
 
+# Remove unneeded 3rdparty to ensure they don't get accidentally bundled
+rm -rf 3rdparty/macdeployqt
+rm -rf 3rdparty/SPMediaKeyTap
+
 %build
-# QT applications need to avoid local binding and copy relocations.  Forcing them to build with
-# -fPIC solves that problem
-export CXXFLAGS="-fPIC $RPM_OPT_FLAGS"
 %{cmake} -DBUILD_WERROR:BOOL=OFF \
          -DCMAKE_BUILD_TYPE:STRING=Release
 %cmake_build
