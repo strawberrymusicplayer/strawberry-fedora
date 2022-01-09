@@ -1,4 +1,10 @@
 %bcond_without tests
+# Fedora 40+ ships with KDE 6, so the Qt6 build is preferred
+%if 0%{?fedora} >= 40
+%bcond_without qt6
+%else
+%bcond_with    qt6
+%endif
 
 %global giturl https://github.com/strawberrymusicplayer/strawberry
 
@@ -25,7 +31,6 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  gcc-c++
 BuildRequires:  gettext
 BuildRequires:  libappstream-glib
-BuildRequires:  cmake(kdsingleapplication)
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(dbus-1)
 BuildRequires:  pkgconfig(fftw3)
@@ -47,23 +52,40 @@ BuildRequires:  pkgconfig(libebur128)
 BuildRequires:  pkgconfig(libmtp)
 BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  pkgconfig(protobuf)
-BuildRequires:  pkgconfig(Qt5Concurrent)
-BuildRequires:  pkgconfig(Qt5Core)
-BuildRequires:  pkgconfig(Qt5DBus)
-BuildRequires:  pkgconfig(Qt5Gui)
-BuildRequires:  pkgconfig(Qt5Network)
-BuildRequires:  pkgconfig(Qt5Sql)
-%if %{with tests}
-BuildRequires:  pkgconfig(Qt5Test)
-%endif
-BuildRequires:  pkgconfig(Qt5Widgets)
-BuildRequires:  pkgconfig(Qt5X11Extras)
 BuildRequires:  pkgconfig(sqlite3) >= 3.7
 BuildRequires:  pkgconfig(taglib) >= 1.11
 %ifnarch s390 s390x
 BuildRequires:  pkgconfig(libgpod-1.0)
 %endif
-BuildRequires:  qt5-linguist
+
+%if %{with qt6}
+BuildRequires:  cmake(kdsingleapplication-qt6)
+BuildRequires:  cmake(Qt6Concurrent)
+BuildRequires:  cmake(Qt6Core)
+BuildRequires:  cmake(Qt6DBus)
+BuildRequires:  cmake(Qt6Gui)
+BuildRequires:  cmake(Qt6LinguistTools)
+BuildRequires:  cmake(Qt6Network)
+BuildRequires:  cmake(Qt6Sql)
+BuildRequires:  cmake(Qt6Widgets)
+%if %{with tests}
+BuildRequires:  cmake(Qt6Test)
+%endif
+%else
+BuildRequires:  cmake(kdsingleapplication)
+BuildRequires:  cmake(Qt5Concurrent)
+BuildRequires:  cmake(Qt5Core)
+BuildRequires:  cmake(Qt5DBus)
+BuildRequires:  cmake(Qt5Gui)
+BuildRequires:  cmake(Qt5LinguistTools)
+BuildRequires:  cmake(Qt5Network)
+BuildRequires:  cmake(Qt5Sql)
+BuildRequires:  cmake(Qt5Widgets)
+BuildRequires:  cmake(Qt5X11Extras)
+%if %{with tests}
+BuildRequires:  cmake(Qt5Test)
+%endif
+%endif
 
 %if %{with tests}
 BuildRequires:  cmake(GTest)
@@ -110,7 +132,11 @@ sed -i '/add_test_file(.* true)/d' tests/CMakeLists.txt
 
 %build
 %{cmake} -DBUILD_WERROR:BOOL=OFF \
+%if %{with qt6}
+         -DBUILD_WITH_QT6=ON \
+%else
          -DBUILD_WITH_QT5=ON \
+%endif
          -DCMAKE_BUILD_TYPE:STRING=Release
 %cmake_build
 
