@@ -1,5 +1,5 @@
 Name:           strawberry
-Version:        1.0.1
+Version:        1.0.2
 Release:        %autorelease
 Summary:        Audio player and music collection organizer
 
@@ -86,6 +86,7 @@ Features:
 mv 3rdparty/singleapplication/LICENSE LICENSE-singleapplication
 
 # Remove unneeded 3rdparty to ensure they don't get accidentally bundled
+rm -rf 3rdparty/getopt
 rm -rf 3rdparty/macdeployqt
 rm -rf 3rdparty/SPMediaKeyTap
 
