@@ -1,5 +1,5 @@
 Name:           strawberry
-Version:        1.0.2
+Version:        1.0.3
 Release:        %autorelease
 Summary:        Audio player and music collection organizer
 
