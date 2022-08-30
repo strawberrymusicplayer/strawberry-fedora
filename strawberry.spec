@@ -1,3 +1,5 @@
+%bcond_without tests
+
 Name:           strawberry
 Version:        1.0.8
 Release:        %autorelease
@@ -45,6 +47,9 @@ BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(Qt5Gui)
 BuildRequires:  pkgconfig(Qt5Network)
 BuildRequires:  pkgconfig(Qt5Sql)
+%if %{with tests}
+BuildRequires:  pkgconfig(Qt5Test)
+%endif
 BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(Qt5X11Extras)
 BuildRequires:  pkgconfig(sqlite3) >= 3.7
@@ -53,6 +58,11 @@ BuildRequires:  pkgconfig(taglib) >= 1.11
 BuildRequires:  pkgconfig(libgpod-1.0)
 %endif
 BuildRequires:  qt5-linguist
+
+%if %{with tests}
+BuildRequires:  cmake(GTest)
+BuildRequires:  pkgconfig(gmock)
+%endif
 
 Requires:       gstreamer1-plugins-good
 Requires:       hicolor-icon-theme
@@ -92,6 +102,11 @@ rm -rf 3rdparty/getopt
 rm -rf 3rdparty/macdeployqt
 rm -rf 3rdparty/SPMediaKeyTap
 
+%if %{with tests}
+# Disable tests that need graphical environment and thus don't work in mock
+sed -i '/add_test_file(.* true)/d' tests/CMakeLists.txt
+%endif
+
 %build
 %{cmake} -DBUILD_WERROR:BOOL=OFF \
          -DCMAKE_BUILD_TYPE:STRING=Release
@@ -101,6 +116,10 @@ rm -rf 3rdparty/SPMediaKeyTap
 %cmake_install
 
 %check
+%if %{with tests}
+%{cmake_build} -t run_strawberry_tests
+%endif
+
 desktop-file-validate %{buildroot}%{_datadir}/applications/org.strawberrymusicplayer.strawberry.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawberrymusicplayer.strawberry.appdata.xml
 
