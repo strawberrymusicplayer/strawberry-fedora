@@ -1,7 +1,7 @@
 %bcond_without tests
 
 Name:           strawberry
-Version:        1.0.9
+Version:        1.0.10
 Release:        %autorelease
 Summary:        Audio player and music collection organizer
 
