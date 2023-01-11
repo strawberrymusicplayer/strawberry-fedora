@@ -1,7 +1,9 @@
 %bcond_without tests
 
+%global giturl https://github.com/strawberrymusicplayer/strawberry
+
 Name:           strawberry
-Version:        1.0.12
+Version:        1.0.13
 Release:        %autorelease
 Summary:        Audio player and music collection organizer
 
@@ -12,7 +14,9 @@ Summary:        Audio player and music collection organizer
 # src/core/timeconstants.h and ext/libstrawberry-common/core/logging and ext/libstrawberry-common/core/messagehandler: ASL 2.0
 License:        GPLv2 and GPLv3+ and LGPLv2 and ASL 2.0 and MIT and Boost
 URL:            https://www.strawberrymusicplayer.org/
-Source0:        https://github.com/strawberrymusicplayer/strawberry/archive/%{version}/%{name}-%{version}.tar.gz
+Source0:        %{giturl}/archive/%{version}/%{name}-%{version}.tar.gz
+
+Patch1:         %{giturl}/commit/194e81205b8a.patch#/001-fix-test-build.patch
 
 BuildRequires:  boost-devel
 BuildRequires:  cmake
