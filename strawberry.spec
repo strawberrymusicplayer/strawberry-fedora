@@ -3,18 +3,25 @@
 %global giturl https://github.com/strawberrymusicplayer/strawberry
 
 Name:           strawberry
-Version:        1.0.17
+Version:        1.0.18
 Release:        %autorelease
 Summary:        Audio player and music collection organizer
 
-# Main program: GPLv3
-# src/analyzer and src/engine/gstengine and src/engine/xineengine: GPLv2
-# src/widgets/fancytabwidget and src/widgets/stylehelper: LGPLv2
-# 3rdparty/singleapplication: MIT
-# src/core/timeconstants.h and ext/libstrawberry-common/core/logging and ext/libstrawberry-common/core/messagehandler: ASL 2.0
-License:        GPLv2 and GPLv3+ and LGPLv2 and ASL 2.0 and MIT and Boost
+# MIT:
+#   3rdparty/kdsingleapplication
+# Apache-2.0:
+#   src/utilities/timeconstants.h
+#   ext/libstrawberry-common/core/logging.{cpp,h}
+#   ext/libstrawberry-common/core/messagehandler.{cpp,h}
+# GPL-2.0-or-later:
+#   src/engine/gstengine.{cpp,h}
+# GPL-3.0-or-later:
+#   everything else
+License:        MIT AND Apache-2.0 AND GPL-2.0-or-later AND GPL-3.0-or-later
 URL:            https://www.strawberrymusicplayer.org/
-Source0:        %{giturl}/archive/%{version}/%{name}-%{version}.tar.gz
+Source:         %{giturl}/archive/%{version}/%{name}-%{version}.tar.gz
+
+Patch:          %{giturl}/commit/0c1f4750eaa98f7b.patch#/001-licenses.patch
 
 BuildRequires:  boost-devel
 BuildRequires:  cmake
@@ -69,7 +76,10 @@ BuildRequires:  pkgconfig(gmock)
 Requires:       gstreamer1-plugins-good
 Requires:       hicolor-icon-theme
 
-Provides:       bundled(singleapplication)
+# Upstream: https://github.com/KDAB/KDSingleApplication/
+# Has no soname nor Qt5/6 parallel installability support, so bundle it
+# for now...
+Provides:       bundled(kdsingleapplication)
 
 %description
 Strawberry is a audio player and music collection organizer.
@@ -97,7 +107,10 @@ Features:
 
 %prep
 %autosetup -p1
-mv 3rdparty/singleapplication/LICENSE LICENSE-singleapplication
+
+# BSD-3-Clause.txt applies only to build files that are not included in
+# strawberry's kdsingleapplication copy.
+mv 3rdparty/kdsingleapplication/LICENSES/MIT.txt LICENSE-kdsingleapplication
 
 # Remove unneeded 3rdparty to ensure they don't get accidentally bundled
 rm -rf 3rdparty/getopt
@@ -126,7 +139,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/org.strawberrymusicpl
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawberrymusicplayer.strawberry.appdata.xml
 
 %files
-%license COPYING LICENSE-singleapplication
+%license COPYING LICENSE-kdsingleapplication
 %doc Changelog
 %{_bindir}/strawberry
 %{_bindir}/strawberry-tagreader
