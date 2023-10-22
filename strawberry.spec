@@ -7,8 +7,6 @@ Version:        1.0.21
 Release:        %autorelease
 Summary:        Audio player and music collection organizer
 
-# MIT:
-#   3rdparty/kdsingleapplication
 # Apache-2.0:
 #   src/utilities/timeconstants.h
 #   ext/libstrawberry-common/core/logging.{cpp,h}
@@ -17,9 +15,11 @@ Summary:        Audio player and music collection organizer
 #   src/engine/gstengine.{cpp,h}
 # GPL-3.0-or-later:
 #   everything else
-License:        MIT AND Apache-2.0 AND GPL-2.0-or-later AND GPL-3.0-or-later
+License:        Apache-2.0 AND GPL-2.0-or-later AND GPL-3.0-or-later
 URL:            https://www.strawberrymusicplayer.org/
 Source:         %{giturl}/archive/%{version}/%{name}-%{version}.tar.gz
+
+Patch0:         %{giturl}/commit/c9197e8df7b02246232a1baf1e4f0c5b3c724aa8.patch#/000-Fix-KDSingleApplication-name.patch
 
 BuildRequires:  boost-devel
 BuildRequires:  cmake
@@ -27,6 +27,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  gcc-c++
 BuildRequires:  gettext
 BuildRequires:  libappstream-glib
+BuildRequires:  cmake(kdsingleapplication)
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(dbus-1)
 BuildRequires:  pkgconfig(fftw3)
@@ -74,11 +75,6 @@ BuildRequires:  pkgconfig(gmock)
 Requires:       gstreamer1-plugins-good
 Requires:       hicolor-icon-theme
 
-# Upstream: https://github.com/KDAB/KDSingleApplication/
-# Has no soname nor Qt5/6 parallel installability support, so bundle it
-# for now...
-Provides:       bundled(kdsingleapplication)
-
 %description
 Strawberry is a audio player and music collection organizer.
 It is a fork of Clementine. The name is inspired by the band Strawbs.
@@ -106,13 +102,8 @@ Features:
 %prep
 %autosetup -p1
 
-# BSD-3-Clause.txt applies only to build files that are not included in
-# strawberry's kdsingleapplication copy.
-mv 3rdparty/kdsingleapplication/LICENSES/MIT.txt LICENSE-kdsingleapplication
-
 # Remove unneeded 3rdparty to ensure they don't get accidentally bundled
-rm -rf 3rdparty/getopt
-rm -rf 3rdparty/SPMediaKeyTap
+rm -rf 3rdparty
 
 %if %{with tests}
 # Disable tests that need graphical environment and thus don't work in mock
@@ -137,7 +128,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/org.strawberrymusicpl
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawberrymusicplayer.strawberry.appdata.xml
 
 %files
-%license COPYING LICENSE-kdsingleapplication
+%license COPYING
 %doc Changelog
 %{_bindir}/strawberry
 %{_bindir}/strawberry-tagreader

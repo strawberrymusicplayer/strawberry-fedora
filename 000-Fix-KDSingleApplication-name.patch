@@ -1,0 +1,29 @@
+From c9197e8df7b02246232a1baf1e4f0c5b3c724aa8 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Ondrej=20Mosn=C3=A1=C4=8Dek?= <omosnacek@gmail.com>
+Date: Sun, 22 Oct 2023 13:53:07 +0200
+Subject: [PATCH] CMake: Fix KDSingleApplication package name for Qt5
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The name of the Qt5 KDSingleApplication CMake package is just
+"KDSingleApplication", not "KDSingleApplication-qt".
+
+Signed-off-by: Ondrej Mosnáček <omosnacek@gmail.com>
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 6801e3e4d..e2609a98a 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -301,7 +301,7 @@ endif()
+ 
+ # SingleApplication
+ if(QT_VERSION_MAJOR EQUAL 5)
+-  set(KDSINGLEAPPLICATION_NAME "KDSingleApplication-qt")
++  set(KDSINGLEAPPLICATION_NAME "KDSingleApplication")
+ else()
+   set(KDSINGLEAPPLICATION_NAME "KDSingleApplication-qt${QT_VERSION_MAJOR}")
+ endif()
