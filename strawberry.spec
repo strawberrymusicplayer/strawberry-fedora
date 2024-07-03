@@ -51,6 +51,7 @@ BuildRequires:  pkgconfig(libchromaprint)
 BuildRequires:  pkgconfig(libebur128)
 BuildRequires:  pkgconfig(libmtp)
 BuildRequires:  pkgconfig(libpulse)
+BuildRequires:  pkgconfig(libvlc)
 BuildRequires:  pkgconfig(protobuf)
 BuildRequires:  pkgconfig(sqlite3) >= 3.7
 BuildRequires:  pkgconfig(taglib) >= 1.11
