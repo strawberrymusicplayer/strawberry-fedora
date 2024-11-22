@@ -1,27 +1,25 @@
 %bcond_without tests
-# Fedora 40+ ships with KDE 6, so the Qt6 build is preferred
-%if 0%{?fedora} >= 40
-%bcond_without qt6
-%else
-%bcond_with    qt6
-%endif
 
 %global giturl https://github.com/strawberrymusicplayer/strawberry
 
 Name:           strawberry
-Version:        1.1.3
+Version:        1.2.1
 Release:        %autorelease
 Summary:        Audio player and music collection organizer
 
 # Apache-2.0:
-#   src/utilities/timeconstants.h
-#   ext/libstrawberry-common/core/logging.{cpp,h}
-#   ext/libstrawberry-common/core/messagehandler.{cpp,h}
+#   src/core/logging.{cpp,h}
+# MIT:
+#   src/widgets/searchfield{.h,_qt.cpp}
+#   src/widgets/searchfield_qt_private.{h,cpp}
 # GPL-2.0-or-later:
 #   src/engine/gstengine.{cpp,h}
+#   src/widgets/prettyslider.{cpp,h}
+#   src/widgets/sliderslider.{cpp,h}
+#   src/widgets/volumeslider.{cpp,h}
 # GPL-3.0-or-later:
 #   everything else
-License:        Apache-2.0 AND GPL-2.0-or-later AND GPL-3.0-or-later
+License:        Apache-2.0 AND GPL-2.0-or-later AND GPL-3.0-or-later AND MIT
 URL:            https://www.strawberrymusicplayer.org/
 Source:         %{giturl}/archive/%{version}/%{name}-%{version}.tar.gz
 
@@ -32,7 +30,6 @@ BuildRequires:  gcc-c++
 BuildRequires:  gettext
 BuildRequires:  libappstream-glib
 BuildRequires:  pkgconfig(alsa)
-BuildRequires:  pkgconfig(dbus-1)
 BuildRequires:  pkgconfig(fftw3)
 BuildRequires:  pkgconfig(gio-2.0)
 BuildRequires:  pkgconfig(gio-unix-2.0)
@@ -51,15 +48,12 @@ BuildRequires:  pkgconfig(libchromaprint)
 BuildRequires:  pkgconfig(libebur128)
 BuildRequires:  pkgconfig(libmtp)
 BuildRequires:  pkgconfig(libpulse)
-BuildRequires:  pkgconfig(libvlc)
-BuildRequires:  pkgconfig(protobuf)
-BuildRequires:  pkgconfig(sqlite3) >= 3.7
-BuildRequires:  pkgconfig(taglib) >= 1.11
+BuildRequires:  pkgconfig(sqlite3) >= 3.9
+BuildRequires:  pkgconfig(taglib) >= 1.12
 %ifnarch s390 s390x
 BuildRequires:  pkgconfig(libgpod-1.0)
 %endif
 
-%if %{with qt6}
 BuildRequires:  cmake(kdsingleapplication-qt6)
 BuildRequires:  cmake(Qt6Concurrent)
 BuildRequires:  cmake(Qt6Core)
@@ -71,24 +65,6 @@ BuildRequires:  cmake(Qt6Sql)
 BuildRequires:  cmake(Qt6Widgets)
 %if %{with tests}
 BuildRequires:  cmake(Qt6Test)
-%endif
-%else
-BuildRequires:  cmake(kdsingleapplication)
-BuildRequires:  cmake(Qt5Concurrent)
-BuildRequires:  cmake(Qt5Core)
-BuildRequires:  cmake(Qt5DBus)
-BuildRequires:  cmake(Qt5Gui)
-BuildRequires:  cmake(Qt5LinguistTools)
-BuildRequires:  cmake(Qt5Network)
-BuildRequires:  cmake(Qt5Sql)
-BuildRequires:  cmake(Qt5Widgets)
-BuildRequires:  cmake(Qt5X11Extras)
-%if %{with tests}
-BuildRequires:  cmake(Qt5Test)
-%endif
-%endif
-
-%if %{with tests}
 BuildRequires:  cmake(GTest)
 BuildRequires:  pkgconfig(gmock)
 %endif
@@ -133,11 +109,6 @@ sed -i '/add_test_file(.* true)/d' tests/CMakeLists.txt
 
 %build
 %{cmake} -DBUILD_WERROR:BOOL=OFF \
-%if %{with qt6}
-         -DBUILD_WITH_QT6=ON \
-%else
-         -DBUILD_WITH_QT5=ON \
-%endif
          -DCMAKE_BUILD_TYPE:STRING=Release
 %cmake_build
 
@@ -156,12 +127,10 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawberry
 %license COPYING
 %doc Changelog
 %{_bindir}/strawberry
-%{_bindir}/strawberry-tagreader
 %{_metainfodir}/org.strawberrymusicplayer.strawberry.appdata.xml
 %{_datadir}/applications/org.strawberrymusicplayer.strawberry.desktop
 %{_datadir}/icons/hicolor/*/apps/strawberry.*
 %{_mandir}/man1/strawberry.1.*
-%{_mandir}/man1/strawberry-tagreader.1.*
 
 %changelog
 %autochangelog
