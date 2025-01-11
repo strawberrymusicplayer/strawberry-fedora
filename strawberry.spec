@@ -3,7 +3,7 @@
 %global giturl https://github.com/strawberrymusicplayer/strawberry
 
 Name:           strawberry
-Version:        1.2.3
+Version:        1.2.4
 Release:        %autorelease
 Summary:        Audio player and music collection organizer
 
@@ -22,6 +22,8 @@ Summary:        Audio player and music collection organizer
 License:        Apache-2.0 AND GPL-2.0-or-later AND GPL-3.0-or-later AND MIT
 URL:            https://www.strawberrymusicplayer.org/
 Source:         %{giturl}/archive/%{version}/%{name}-%{version}.tar.gz
+
+Patch:          %{giturl}/commit/041f7619214d.patch#/001-fix-tests.patch
 
 BuildRequires:  boost-devel
 BuildRequires:  cmake
