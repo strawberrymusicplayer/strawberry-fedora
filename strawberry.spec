@@ -52,9 +52,7 @@ BuildRequires:  pkgconfig(libmtp)
 BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  pkgconfig(sqlite3) >= 3.9
 BuildRequires:  pkgconfig(taglib) >= 1.12
-%ifnarch s390 s390x
 BuildRequires:  pkgconfig(libgpod-1.0)
-%endif
 
 BuildRequires:  cmake(kdsingleapplication-qt6)
 BuildRequires:  cmake(Qt6Concurrent)
