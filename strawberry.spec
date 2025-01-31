@@ -3,7 +3,7 @@
 %global giturl https://github.com/strawberrymusicplayer/strawberry
 
 Name:           strawberry
-Version:        1.2.6
+Version:        1.2.7
 Release:        %autorelease
 Summary:        Audio player and music collection organizer
 
@@ -61,6 +61,7 @@ BuildRequires:  cmake(Qt6LinguistTools)
 BuildRequires:  cmake(Qt6Network)
 BuildRequires:  cmake(Qt6Sql)
 BuildRequires:  cmake(Qt6Widgets)
+BuildRequires:  cmake(Qt6XcbQpaPrivate)
 %if %{with tests}
 BuildRequires:  cmake(Qt6Test)
 BuildRequires:  cmake(GTest)
