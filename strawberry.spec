@@ -3,7 +3,7 @@
 %global giturl https://github.com/strawberrymusicplayer/strawberry
 
 Name:           strawberry
-Version:        1.2.7
+Version:        1.2.9
 Release:        %autorelease
 Summary:        Audio player and music collection organizer
 
@@ -48,11 +48,13 @@ BuildRequires:  pkgconfig(libchromaprint)
 BuildRequires:  pkgconfig(libebur128)
 BuildRequires:  pkgconfig(libmtp)
 BuildRequires:  pkgconfig(libpulse)
+BuildRequires:  pkgconfig(libsparsehash)
 BuildRequires:  pkgconfig(sqlite3) >= 3.9
 BuildRequires:  pkgconfig(taglib) >= 1.12
 BuildRequires:  pkgconfig(libgpod-1.0)
 
 BuildRequires:  cmake(kdsingleapplication-qt6)
+BuildRequires:  cmake(RapidJSON)
 BuildRequires:  cmake(Qt6Concurrent)
 BuildRequires:  cmake(Qt6Core)
 BuildRequires:  cmake(Qt6DBus)
@@ -97,9 +99,6 @@ Features:
 
 %prep
 %autosetup -p1
-
-# Remove unneeded 3rdparty to ensure they don't get accidentally bundled
-rm -rf 3rdparty
 
 %if %{with tests}
 # Disable tests that need graphical environment and thus don't work in mock
