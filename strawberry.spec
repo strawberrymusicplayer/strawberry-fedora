@@ -1,4 +1,15 @@
-%bcond_without tests
+%bcond tests 1
+%if %{defined rhel}
+%bcond qpa_qplatformnativeinterface %[%{rhel} >= 10]
+# https://bugzilla.redhat.com/show_bug.cgi?id=2359769
+%bcond streamtagreader              %[%{rhel} ==  9]
+# https://bugzilla.redhat.com/show_bug.cgi?id=2358081
+%bcond gpod                         0
+%else
+%bcond qpa_qplatformnativeinterface 1
+%bcond streamtagreader              1
+%bcond gpod                         1
+%endif
 
 %global giturl https://github.com/strawberrymusicplayer/strawberry
 
@@ -49,10 +60,14 @@ BuildRequires:  pkgconfig(libchromaprint)
 BuildRequires:  pkgconfig(libebur128)
 BuildRequires:  pkgconfig(libmtp)
 BuildRequires:  pkgconfig(libpulse)
+%if %{with streamtagreader}
 BuildRequires:  pkgconfig(libsparsehash)
+%endif
 BuildRequires:  pkgconfig(sqlite3) >= 3.9
 BuildRequires:  pkgconfig(taglib) >= 1.12
+%if %{with gpod}
 BuildRequires:  pkgconfig(libgpod-1.0)
+%endif
 
 BuildRequires:  cmake(kdsingleapplication-qt6)
 BuildRequires:  cmake(RapidJSON)
@@ -64,7 +79,9 @@ BuildRequires:  cmake(Qt6LinguistTools)
 BuildRequires:  cmake(Qt6Network)
 BuildRequires:  cmake(Qt6Sql)
 BuildRequires:  cmake(Qt6Widgets)
+%if %{with qpa_qplatformnativeinterface}
 BuildRequires:  cmake(Qt6XcbQpaPrivate)
+%endif
 %if %{with tests}
 BuildRequires:  cmake(Qt6Test)
 BuildRequires:  cmake(GTest)
@@ -108,6 +125,15 @@ sed -i '/add_test_file(.* true)/d' tests/CMakeLists.txt
 
 %build
 %{cmake} -DBUILD_WERROR:BOOL=OFF \
+%if !%{with qpa_qplatformnativeinterface}
+         -DENABLE_QPA_QPLATFORMNATIVEINTERFACE=OFF \
+%endif
+%if !%{with streamtagreader}
+         -DENABLE_STREAMTAGREADER=OFF \
+%endif
+%if !%{with gpod}
+         -DENABLE_GPOD=OFF \
+%endif
          -DCMAKE_BUILD_TYPE:STRING=Release
 %cmake_build
 
