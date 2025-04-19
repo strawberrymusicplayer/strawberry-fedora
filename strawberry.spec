@@ -3,7 +3,7 @@
 %global giturl https://github.com/strawberrymusicplayer/strawberry
 
 Name:           strawberry
-Version:        1.2.9
+Version:        1.2.10
 Release:        %autorelease
 Summary:        Audio player and music collection organizer
 
@@ -12,6 +12,7 @@ Summary:        Audio player and music collection organizer
 # MIT:
 #   src/widgets/searchfield{.h,_qt.cpp}
 #   src/widgets/searchfield_qt_private.{h,cpp}
+#   3rdparty/discord-rpc/...
 # GPL-2.0-or-later:
 #   src/engine/gstengine.{cpp,h}
 #   src/widgets/prettyslider.{cpp,h}
@@ -123,6 +124,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawberry
 
 %files
 %license COPYING
+%license 3rdparty/discord-rpc/LICENSE
 %doc Changelog
 %{_bindir}/strawberry
 %{_metainfodir}/org.strawberrymusicplayer.strawberry.appdata.xml
