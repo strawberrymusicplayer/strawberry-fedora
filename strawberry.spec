@@ -1,13 +1,11 @@
 %bcond tests 1
+%bcond streamtagreader              1
 %if %{defined rhel}
 %bcond qpa_qplatformnativeinterface %[%{rhel} >= 10]
-# https://bugzilla.redhat.com/show_bug.cgi?id=2359769
-%bcond streamtagreader              %[%{rhel} ==  9]
 # https://bugzilla.redhat.com/show_bug.cgi?id=2358081
 %bcond gpod                         0
 %else
 %bcond qpa_qplatformnativeinterface 1
-%bcond streamtagreader              1
 %bcond gpod                         1
 %endif
 
