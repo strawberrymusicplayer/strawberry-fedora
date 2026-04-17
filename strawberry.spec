@@ -12,7 +12,7 @@
 %global giturl https://github.com/strawberrymusicplayer/strawberry
 
 Name:           strawberry
-Version:        1.2.18
+Version:        1.2.19
 Release:        %autorelease
 Summary:        Audio player and music collection organizer
 
@@ -68,7 +68,6 @@ BuildRequires:  pkgconfig(libgpod-1.0)
 %endif
 
 BuildRequires:  cmake(kdsingleapplication-qt6)
-BuildRequires:  cmake(RapidJSON)
 BuildRequires:  cmake(Qt6Concurrent)
 BuildRequires:  cmake(Qt6Core)
 BuildRequires:  cmake(Qt6DBus)
@@ -148,7 +147,6 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/org.strawberry
 
 %files
 %license COPYING
-%license 3rdparty/discord-rpc/LICENSE
 %doc Changelog
 %{_bindir}/strawberry
 %{_metainfodir}/org.strawberrymusicplayer.strawberry.appdata.xml
