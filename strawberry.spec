@@ -115,6 +115,11 @@ Features:
 %prep
 %autosetup -p1
 
+%if 0%{?rhel} && 0%{?rhel} <= 9
+# RHEL 9's older libappstream-glib doesn't support this field
+sed -i '/<url type="vcs-browser">/d' dist/unix/org.strawberrymusicplayer.strawberry.appdata.xml
+%endif
+
 %if %{with tests}
 # Disable tests that need graphical environment and thus don't work in mock
 sed -i '/add_test_file(.* true)/d' tests/CMakeLists.txt
