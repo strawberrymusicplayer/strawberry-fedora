@@ -12,7 +12,7 @@
 %global giturl https://github.com/strawberrymusicplayer/strawberry
 
 Name:           strawberry
-Version:        1.2.19
+Version:        1.2.20
 Release:        %autorelease
 Summary:        Audio player and music collection organizer
 
@@ -83,6 +83,8 @@ BuildRequires:  cmake(Qt6XcbQpaPrivate)
 BuildRequires:  cmake(Qt6Test)
 BuildRequires:  cmake(GTest)
 BuildRequires:  pkgconfig(gmock)
+# Needed for waveformpipeline_test (WAV decoding)
+BuildRequires:  gstreamer1-plugins-good
 %endif
 
 Requires:       gstreamer1-plugins-good
