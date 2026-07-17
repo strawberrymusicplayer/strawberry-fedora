@@ -12,7 +12,7 @@
 %global giturl https://github.com/strawberrymusicplayer/strawberry
 
 Name:           strawberry
-Version:        1.2.23
+Version:        1.2.24
 Release:        %autorelease
 Summary:        Audio player and music collection organizer
 
